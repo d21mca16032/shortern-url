@@ -21,8 +21,8 @@ import base64
 # Assuming urls.db is in your app root folder
 app = Flask(__name__)
 
-# host = 'https://shortern-url.herokuapp.com/'
-host = 'http://localhost:5000/'
+host = 'https://shortern-url.herokuapp.com/'
+# host = 'http://localhost:5000/'
 
 
 def table_check():
