@@ -5,10 +5,9 @@ from sqlite3 import OperationalError
 import string
 import sqlite3
 try:
-    from urllib.parse import urlparse  # Python 3
+    from urllib.parse import urlparse
     str_encode = str.encode
 except ImportError:
-    # from urlparse import urlparse  # Python 2
     str_encode = str
 try:
     from string import ascii_lowercase
@@ -22,13 +21,14 @@ import base64
 # Assuming urls.db is in your app root folder
 app = Flask(__name__)
 
-host = 'https://shortern-url.herokuapp.com/'
+# host = 'https://shortern-url.herokuapp.com/'
+host = 'http://localhost:5000/'
 
 
 def table_check():
     create_table = """
         CREATE TABLE WEB_URL(
-        ID INT PRIMARY KEY AUTOINCREMENT,
+        ID INTEGER PRIMARY KEY AUTOINCREMENT,
         URL TEXT NOT NULL
         );
         """
@@ -101,7 +101,8 @@ def redirect_short_url(short_url):
         abort(500)
 
     if short is not None:
-        redirect(base64.urlsafe_b64decode(short[0]).decode("utf-8"))
+        redirectURL = base64.urlsafe_b64decode(short[0]).decode("utf-8")
+        return redirect(redirectURL, code=302, Response=None)
     else:
         abort(404)
 
@@ -117,6 +118,8 @@ def error_500(e):
 
 
 if __name__ == '__main__':
-    # This code checks whether database table is created or not
     table_check()
-    app.run(debug=True)
+    debugBol = False
+    if 'localhost' in host:
+        debugBol = True
+    app.run(debug=debugBol)
