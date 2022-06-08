@@ -1,6 +1,8 @@
+from urllib import response
 from flask import Flask, request, render_template, redirect
-from flask import abort
+from flask import abort, jsonify
 from math import floor
+import json
 from sqlite3 import OperationalError
 import string
 import sqlite3
@@ -63,31 +65,40 @@ def toBase10(num, b=62):
     return res
 
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    if request.method == 'POST':
-        original_url = str_encode(request.form.get('url'))
-        if urlparse(original_url).scheme == '':
-            url = 'http://' + original_url
-        else:
-            url = original_url
-        with sqlite3.connect('urls.db') as conn:
-            cursor = conn.cursor()
+def insertURLToDB(url):
+    if urlparse(url).scheme == '':
+        url = 'http://' + url
+    else:
+        url = url
+    with sqlite3.connect('urls.db') as conn:
+        cursor = conn.cursor()
+        try:
+            res = cursor.execute(
+                'INSERT INTO WEB_URL (URL) VALUES (?)',
+                [base64.urlsafe_b64encode(bytes(url, 'utf-8'))]
+            )
+        except Exception as e:
             res = cursor.execute(
                 'INSERT INTO WEB_URL (URL) VALUES (?)',
                 [base64.urlsafe_b64encode(url)]
             )
 
-            conn.commit()
+        conn.commit()
 
-            encoded_string = toBase62(res.lastrowid)
+        return toBase62(res.lastrowid)
 
+
+@ app.route('/', methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        original_url = str_encode(request.form.get('url'))
+        encoded_string = insertURLToDB(original_url)
         return render_template('home.html', short_url=host + encoded_string)
 
     return render_template('home.html')
 
 
-@app.route('/<short_url>')
+@ app.route('/<short_url>')
 def redirect_short_url(short_url):
     try:
         decoded = toBase10(short_url)
@@ -107,12 +118,28 @@ def redirect_short_url(short_url):
         abort(404)
 
 
-@app.errorhandler(404)
+@ app.route('/api/', methods=['POST'])
+def redirect_short_url_api():
+    req_data = request.get_json(force=True)
+    if str(req_data['token']) != 'RGFEAxTtAT5hkKum':
+        abort(404)
+    try:
+        responseList = []
+        urls = req_data['urls']
+        for url in urls:
+            id = insertURLToDB(url)
+            responseList.append({'originalURL:': url, 'shortURL': host + id})
+        return {'response': responseList}
+    except Exception as e:
+        abort(500)
+
+
+@ app.errorhandler(404)
 def error_404(e):
     return render_template('errors/404.html'), 404
 
 
-@app.errorhandler(500)
+@ app.errorhandler(500)
 def error_500(e):
     return render_template('errors/500.html'), 500
 

@@ -16,7 +16,7 @@
                      {% if not short_url %}
                            <form method="post" class="navbar-form navbar-right" action="">
                               
-                                 <input type="text" id="url" name="url" class="form-control input-lg chat-input" placeholder="Enter URL to Shorten" />
+                                 <input required type="url" id="url" name="url" class="form-control input-lg chat-input" placeholder="Enter URL to Shorten" />
                                  <button type="submit" class="btn btn-lg btn-info">Submit</button>
                               
                            </form>
@@ -25,7 +25,7 @@
                      <h3>
                         Your shortened URL is: <h2><a href="{{short_url}}"> {{short_url}}</h2></a>
                      </h3>
-                     <a href="#"> Shorten another URL? </a>
+                     <a href="/"> Shorten another URL? </a>
                      <br>
                      {% endif %}
 						</header>
