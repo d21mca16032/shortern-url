@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>URL shortener</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+	</head>
+	<body class="is-preload">
+			<div id="wrapper">
+					<section class="intro">
+						<header>
+							<h1>URL shortener</h1>
+							<p>The link shortener that has your brand's back</p>
+                     
+                     {% if not short_url %}
+                           <form method="post" class="navbar-form navbar-right" action="">
+                              
+                                 <input type="text" id="url" name="url" class="form-control input-lg chat-input" placeholder="Enter URL to Shorten" />
+                                 <button type="submit" class="btn btn-lg btn-info">Submit</button>
+                              
+                           </form>
+                         
+                     {% else %}
+                     <h3>
+                        Your shortened URL is: <h2><a href="{{short_url}}"> {{short_url}}</h2></a>
+                     </h3>
+                     <a href="#"> Shorten another URL? </a>
+                     <br>
+                     {% endif %}
+						</header>
+						<div class="content"> 
+							<span class="image fill" data-position="center"><img src="{{ url_for('static', filename='images/pic05.jpg') }}" alt="" /></span>
+						</div>
+					</section>
+
+				<!-- Section -->
+					<section id="first">
+						<header>
+							<h2>Easily redirect any link</h2>
+						</header>
+						<div class="content">
+							<p><strong>Change the destination URL for any short link, including QR Codes. Bitly makes it easy to assign a new URL to any of your links, whether you want to correct a destination error, update a destination or manually expire old links.</p>
+							<span class="image main"><img src="{{ url_for('static', filename='images/pic04.png') }}" alt="" /></span>
+						</div>
+                 
+					</section>
+
+					<section id="second">
+						<header>
+							<h2>Create secure & reliable links</h2>
+						</header>
+						<div class="content">
+							<p><strong>Rest assured knowing your links are secure. Every link is encrypted with HTTPS to guard against eavesdropping or third-party tampering—because you have more important things to worry about.</p>
+							<span class="image main"><img src="{{ url_for('static', filename='images/gallery/gifs/security-min.gif') }}" alt="" /></span>
+						</div>
+					</section>
+					
+               <section>
+						<header>
+							<h2>Hundreds of integrations</h2>
+						</header>
+						<div class="content">
+							<p><strong>Scale and automate your workflow quickly and efficiently using the proven Bitly API and any of Bitly's 700+ integrations. Create custom short links to share via SMS or empower influencers with custom referral links—the possibilities are endless.</p>
+							<span class="image main"><img src="{{ url_for('static', filename='images/pic03.jpg') }}" alt="" /></span>
+						</div>
+					</section>
+
+				<!-- Section -->
+					<section>
+						<header>
+							<h2>Get in touch</h2>
+						</header>
+						<div class="content">
+							<p><strong>Contact </strong> We'll link you to the right person fast.</p>
+							<form method="post" action="https://formspree.io/xvowepon" >
+								<div class="fields">
+									<div class="field half">
+										<input type="text" name="name" id="name" placeholder="Name" />
+									</div>
+									<div class="field half">
+										<input type="email" name="email" id="email" placeholder="Email" />
+									</div>
+									<div class="field">
+										<textarea name="message" id="message" placeholder="Message" rows="7"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" class="button primary" /></li>
+								</ul>
+							</form>
+						</div>
+						<footer>
+							<ul class="items">
+								<li>
+									<h3>Email</h3>
+									<a href="mailto:D21MCA16032@cuchd.in">D21MCA16032@cuchd.in</a>
+								</li>
+								<li>
+									<h3>Phone</h3>
+									<a href="tel:1800121288800">1800 121 288 800</a>
+								</li>
+								<li>
+									<h3>Address</h3>
+									<span>NH-95, Ludhiana - Chandigarh State Hwy, Punjab 140413</span>
+								</li>
+								<li>
+									<h3>Elsewhere</h3>
+									<ul class="icons">
+										<li><a href="https://www.linkedin.com/in/aggarwalyash" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+										<li><a href="https://github.com/y-agg" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+									</ul>
+								</li>
+							</ul>
+						</footer>
+					</section>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+	</body>
+</html>
